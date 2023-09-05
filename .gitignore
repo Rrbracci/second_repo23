@@ -1,5 +1,6 @@
 # Mine endringer
 *.Rproj
+*.pdf
 *.html
 *.docx
 *.pptx
