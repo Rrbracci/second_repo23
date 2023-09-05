@@ -1,0 +1,66 @@
+---
+title: "ggplot"
+format: html
+editor: visual
+---
+
+```{r}
+#| label: setup
+#| #| echo: false
+#| output: false
+#| message: false
+library(tidyverse)
+library(ggpubr)
+```
+
+## Intro ggplot
+
+```{r}
+ggplot(
+  data = mtcars, 
+  mapping = aes(x = disp, y = mpg)
+  ) + 
+  geom_point() + 
+  geom_smooth(se = TRUE) +
+  geom_smooth(method = "lm", colour = "red", se = FALSE)
+
+```
+
+```{r}
+gg1 <-   ggplot(data = mtcars, mapping = aes(x = disp, y = mpg)) +
+  geom_point()
+
+gg2 <-   ggplot(data = mtcars) +
+  geom_point(mapping = aes(x = disp, y = mpg))
+
+ggarrange(gg1, gg2, labels = c("mapping = aes in ggplot", "mapping = aes in geom_*"),
+          nrow = 1)
+```
+
+```{r}
+gg1 <-   ggplot(data = mtcars, mapping = aes(x = disp, y = mpg)) +
+  geom_point()
+```
+
+```{r}
+gg2 <-   ggplot(data = mtcars) +
+  geom_point(mapping = aes(x = disp, y = mpg))
+```
+
+```{r}
+ggarrange(gg1, gg2, labels = c(
+  "mapping = aes in ggplot", 
+  "mapping = aes in geom_*"
+  ),
+          nrow = 2)
+```
+
+```{r}
+ggplot() +
+  geom_point(data = mtcars, mapping = aes(x = disp, y = mpg))
+```
+
+```{r}
+ggplot() +
+  geom_point(data = mtcars, mapping = aes(x = disp, y = mpg, colour = factor(cyl), size = qsec))
+```
