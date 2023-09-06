@@ -64,3 +64,120 @@ ggplot() +
 ggplot() +
   geom_point(data = mtcars, mapping = aes(x = disp, y = mpg, colour = factor(cyl), size = qsec))
 ```
+
+```{r}
+ggplot()+
+  geom_point(
+    mapping = aes(x = disp, y = mpg,
+                  size = factor(cyl),
+                  shape = factor(cyl),
+                  shape = factor(cyl),
+                  ),
+    colour = "blue",
+    data = mtcars
+  )
+```
+
+```{r}
+ggplot()+
+  geom_point(
+    mapping = aes(x = disp, y = mpg,
+                  colour = factor(am),
+                  size = qsec,
+                  shape = factor(cyl),
+                  ),
+    data = mtcars
+  )
+```
+
+```{r}
+ggplot() +
+  geom_point(data = mtcars,
+             mapping = aes
+             (x = disp,
+              y = mpg, 
+              colour = factor(cyl), 
+              alpha = 3.6*(0.25*1609.347)/qsec,
+              shape = factor(ifelse(am, "Man", "Aut"))
+              ), 
+             size = 4
+             ) +
+            labs(
+              colour = "cyl", 
+              alpha = "speed\n(km/h)", 
+              shape = "trans-\nmission"
+              )
+```
+
+```{r}
+ggplot() +
+  geom_point(data = mtcars,
+             mapping = aes
+             (x = disp,
+              y = mpg, 
+              colour = factor(cyl), 
+              alpha = 3.6*(0.25*1609.347)/qsec,
+              shape = factor(ifelse(am, "Man", "Aut"))
+              ), 
+             size = 4
+             ) +
+            labs(
+              colour = "cyl", 
+              alpha = "speed\n(km/h)", 
+              shape = "trans-\nmission",
+              level = 0,99,
+              span = 0,5
+              )
+```
+
+```{r}
+ggplot(
+  data = mtcars, 
+  mapping = aes(
+    x = disp, 
+    y = mpg
+    )
+  ) +
+  geom_point() +
+  geom_smooth(
+    method = "lm", 
+    se = FALSE
+    ) +
+  # robust lm
+  geom_smooth(
+    method = MASS::rlm, 
+    colour = 'Red', 
+    se = FALSE
+    )
+```
+
+```{r}
+ggplot() +
+  geom_point(
+    data = mtcars,
+    mapping = aes(
+      x = disp,
+      y = mpg, 
+      colour = factor(cyl), 
+      size = 3.6*(0.25*1609.347)/qsec, 
+      shape = factor(
+        # Note codeing am
+        # 0 automatic, 1 manual
+        ifelse(
+          am, 
+          "Aut", 
+          "Man"
+          )
+        )
+      )
+    ) +
+  labs(
+    colour = "cyl", 
+    size = "speed\n(km/h)", 
+    shape = "trans-\nmission"
+    ) +
+  geom_smooth(
+    data = mtcars, 
+    mapping = aes(x = disp, y = mpg)
+    )
+```
