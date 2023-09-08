@@ -11,6 +11,7 @@ editor: visual
 #| message: false
 library(tidyverse)
 library(ggpubr)
+library(readxl)
 ```
 
 ## Intro ggplot
@@ -323,4 +324,10 @@ ggplot(
     y = "Mean acceleration", 
     colour = "Weight"
     )
+```
+
+```{r}
+library(readxl)
+Rogaland_99_02 <- read_excel("Rogaland_99_02.xlsx", 
+    sheet = "RegHeltLedige", skip = 2)
 ```
