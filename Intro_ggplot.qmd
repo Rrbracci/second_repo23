@@ -331,3 +331,83 @@ library(readxl)
 Rogaland_99_02 <- read_excel("Rogaland_99_02.xlsx", 
     sheet = "RegHeltLedige", skip = 2)
 ```
+
+```{r}
+metadata_10540_no <- ApiData(
+  "https://data.ssb.no/api/v0/no/table/10540/",
+  returnMetaFrames = TRUE
+  )
+```
+
+```{r}
+metadata_10540_no$
+```
+
+```{r}
+unemp99to02 <- ApiData(
+  "http://data.ssb.no/api/v0/en/table/10540",
+  # Have not been able to specify more complex regions
+  Region = list("11*"),
+  Tid = c(paste(
+    rep(1999:2002, each = 12), 
+    "M",
+    sprintf("%02d", 1:12), 
+    sep = "")
+    )
+  )
+```
+
+```{r}
+unemp99to02 <- ApiData12(
+  "http://data.ssb.no/api/v0/en/table/10540",
+  # Have not been able to specify more complex regions
+  Region = list("11*"),
+  Tid = c(paste(
+    rep(1999:2002, each = 12), 
+    "M",
+    sprintf("%02d", 1:12), 
+    sep = "")
+    )
+  )
+```
+
+```{r}
+unemp99to02 <- ApiData12(
+  "http://data.ssb.no/api/v0/en/table/10540",
+  # Have not been able to specify more complex regions
+  #Region = list("11*"),
+  Region = c("1101",
+          "1103",
+          "1106",
+          "1108",
+          "1111",
+          "1112",
+          "1114",
+          "1119",
+          "1120",
+          "1121",
+          "1122",
+          "1124",
+          "1127",
+          "1129",
+          "1130",
+          "1133",
+          "1134",
+          "1135",
+          "1141",
+          "1142",
+          "1144",
+          "1145",
+          "1146",
+          "1149",
+          "1151",
+          "1154"),
+  Tid = c(paste(
+    rep(1999:2002, each = 12), 
+    "M",
+    sprintf("%02d", 1:12), 
+    sep = "")
+    ),
+  Alder = "15-29"
+  )
+```
