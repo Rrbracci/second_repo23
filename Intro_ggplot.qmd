@@ -12,6 +12,7 @@ editor: visual
 library(tidyverse)
 library(ggpubr)
 library(readxl)
+library(nycflights13)
 ```
 
 ## Intro ggplot
@@ -372,8 +373,8 @@ unemp99to02 <- ApiData12(
 ```
 
 ```{r}
-unemp99to02 <- ApiData12(
-  "http://data.ssb.no/api/v0/en/table/10540",
+unemp99to02 <- ApiData(
+  "https://data.ssb.no/api/v0/no/table/10540/",
   # Have not been able to specify more complex regions
   #Region = list("11*"),
   Region = c("1101",
@@ -410,4 +411,19 @@ unemp99to02 <- ApiData12(
     ),
   Alder = "15-29"
   )
+```
+
+```{r}
+set.seed(1234)
+res_mean_rnorm_3dig_string
+  rnorm(n = 10, mean = 0, sd = 1) %>%
+  mean() %>%
+  round(digits = 3) %>%
+  paste("Result:", .)
+res_mean_rnorm_3dig_string
+```
+
+```{r}
+# what size is it
+dim(flights)
 ```
