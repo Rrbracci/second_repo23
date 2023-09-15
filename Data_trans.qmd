@@ -1,0 +1,75 @@
+---
+title: "Data_trans"
+format: html
+editor: visual
+---
+
+```{r}
+#| label: setup
+library (tidyverse)
+```
+
+```{r}
+#|paged.print: false
+mtcars
+```
+
+```{r}
+#| paget.print: false
+mtcars |>
+  as_tibble(rownames = "model") %>%
+  arrange(cyl, hp) |>
+  print(n=32)
+```
+
+```{r}
+#| paget.print: false
+data.frame(x= rnorm (2000), y = rnorm (2000, 2, 4))
+```
+
+```{r}
+#| paget.print: false
+my_mtcars <- mtcars |>
+  as_tibble(rownames = "model") %>%
+  select(model:wt) |>
+  select(model, vekt = wt, everything()) |>
+  arrange(cyl, desc(model)) |>
+  print(n=32)
+```
+
+```{r}
+my_mtcars
+#| paget.print: false
+```
+
+```{r}
+my_mtcars |>
+  filter(cyl == 6) |>
+  select(model) |>
+  arrange(model) |>
+  pull()
+```
+
+group_by(cyl) \|\>
+
+summarise(mean_hp = round(mean(hp), digits = 1))
+
+```{r}
+my_mtcars |>
+  group_by(cyl) |>
+  summarise(mean_disp = round(mean(disp), digits = 1))
+```
+
+```{r}
+my_mtcars <- my_mtcars |>
+  mutate(
+    hp_vs_disp = hp/disp
+  )
+```
+
+```{r}
+my_mtcars |>
+  group_by(cyl) |>
+  summarise(mean_hp_vs_disp = round(mean(hp_vs_disp), digits = 3))
+  
+```
