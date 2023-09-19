@@ -10,25 +10,125 @@ library(tidyverse)
 library(nycflights13)
 ```
 
-## Quarto
-
-Quarto enables you to weave together content and executable code into a finished document.
-To learn more about Quarto see <https://quarto.org>.
-
-## Running Code
-
-When you click the **Render** button a document will be generated that includes both content and the output of embedded code.
-You can embed code like this:
-
 ```{r}
-1 + 1
+flights <- flights
 ```
 
-You can add options to executable code like this
-
 ```{r}
-#| echo: false
-2 * 2
+dim(flights)[1]
 ```
 
-The `echo: false` option disables the printing of code (only output is displayed).
+```{r}
+class(flights)
+```
+
+```{r}
+#| paged.print: false |>
+flights |>
+  head(n = 10)
+```
+
+```{r}
+#| paged.print: false |>
+flights |>
+  arrange(desc(month), desc(day))
+```
+
+```{r}
+flights <- flights |>
+  arrange(month, day, desc(dep_time))
+```
+
+```{r}
+#| paged.print: false |>
+flights |>
+  tail()
+```
+
+```{r}
+#| paged.print: false |>
+flights |>
+  filter(month == 1, day == 1) |>
+  print(
+  n = 5, 
+  width = 70
+  )
+```
+
+```{r}
+summary(flights)
+```
+
+```{r}
+  flights %>% 
+  filter(month == 1, day %in% c(1, 15, 30)) %>% 
+  slice_tail(n = 7) %>% 
+  print(width = 70)
+```
+
+```{r}
+# or er |
+FALSE | FALSE
+```
+
+```{r}
+# and er &
+TRUE & TRUE
+```
+
+```{r}
+# and er &
+TRUE & FALSE
+```
+
+```{r}
+# and er &
+TRUE & FALSE | TRUE
+```
+
+```{r}
+# and er &
+TRUE & FALSE | FALSE
+```
+
+```{r}
+# and er &
+TRUE & (FALSE | TRUE)
+```
+
+```{r}
+flights |>
+  filter(month %in% c(4, 9)) |>
+  nrow()
+```
+
+```{r}
+#| paged.print: false
+flights |>
+  group_by(month) |>
+  summarise(antall_flyvninger = n())
+```
+
+```{r}
+flights |>
+  filter(month == 1) |>
+  group_by(day) |>
+  count() |>
+  print(n = 31)
+```
+
+```{r}
+#| paged.print: false
+flights |>
+  filter(month == 1) |>
+  group_by(day) |>
+  count() |>
+  arrange(desc(n)) |>
+  print(n = 1)
+```
+
+```{r}
+flights |>
+  filter(day %in% c(1,2)) |>
+  nrow()
+```
