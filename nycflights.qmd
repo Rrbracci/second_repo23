@@ -132,3 +132,90 @@ flights |>
   filter(day %in% c(1,2)) |>
   nrow()
 ```
+
+```{r}
+flights |>
+  filter(arr_delay >= 15 & arr_delay < 30) |>
+  nrow()
+```
+
+```{r}
+sum(is.na(flights$arr_delay))
+
+```
+
+```{r}
+# Dropper variabelen year
+flights <- flights |>
+  select(-year)
+```
+
+```{r}
+flights <- flights |>
+  select(month:day, carrier, tailnum, everything())
+```
+
+```{r}
+# Henter inn flights på ny
+flights <- nycflights13::flights
+```
+
+```{r}
+arr_delay_May <- flights |>
+  select(day, month, arr_delay) |>
+  filter(month == 5) |>
+  select(-month)
+```
+
+```{r}
+#| paged.print: false
+# Gjennomsnittlig ankomtsforsinkelse for dagene i mai 2013
+arr_delay_May |>
+  group_by(day) |>
+  summarise(gjennomsnitt_f = round(
+    mean(
+    arr_delay,
+    na.rm = TRUE
+    ),
+    digits = 2
+  ),
+  median_f = median(arr_delay, na.rm = TRUE),
+  min_f = min(arr_delay, na.rm = TRUE),
+  maks_f = max(arr_delay, na.rm = TRUE),
+  total_f = sum(arr_delay, na.rm = TRUE)
+  ) |>
+  print(n = 31)
+```
+
+```{r}
+flights <- flights %>%
+  select(month:day, ends_with("delay"), distance, air_time) %>%
+  mutate(
+    gain = dep_delay - arr_delay,
+    speed = (distance/air_time) * 60
+    ) %>%
+  select(month:day, gain, everything()) %>%
+  arrange(gain)
+head(flights, n = 5) 
+```
+
+```{r}
+my_data <- flights %>%
+    transmute(
+    gain = dep_delay - arr_delay,
+    speed = (distance/air_time) * 60
+    ) %>%
+  arrange(gain)
+head(my_data, n = 3)
+```
+
+```{r}
+alt_my_data <- flights %>%
+    mutate(
+    gain = dep_delay - arr_delay,
+    speed = (distance/air_time) * 60
+    ) %>%
+  select (gain, speed) |>
+  arrange(gain)
+head(my_data, n = 3)
+```
