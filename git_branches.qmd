@@ -9,3 +9,9 @@ editor: visual
 Hahaha.
 
 ## Litteraturstudie
+
+### Versjon 2
+
+```{r}
+plot(cars)
+```
