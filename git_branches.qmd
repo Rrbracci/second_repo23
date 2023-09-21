@@ -9,3 +9,13 @@ editor: visual
 Hahaha.
 
 ## Litteraturstudie
+
+## Analyse
+
+It is beautiful.
+
+### Versjon 2
+
+```{r}
+plot(cars)
+```
