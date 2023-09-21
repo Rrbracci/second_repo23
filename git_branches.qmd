@@ -10,6 +10,12 @@ Hahaha.
 
 ## Litteraturstudie
 
+### Versjon 1
+
+```{r}
+plot(mtcars$hp, mtcars$mpg)
+```
+
 ### Versjon 2
 
 ```{r}
