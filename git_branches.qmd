@@ -10,11 +10,17 @@ Hahaha.
 
 ## Litteraturstudie
 
+<<<<<<< HEAD
 ### Versjon 1
 
 ```{r}
 plot(mtcars$hp, mtcars$mpg)
 ```
+=======
+## Analyse
+
+It is beautiful.
+>>>>>>> analyse_vers2
 
 ### Versjon 2
 
