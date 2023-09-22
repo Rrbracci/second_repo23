@@ -44,3 +44,134 @@ heights |>
 summary(heights)
 
 ```
+
+```{r}
+# NAs in my_heights?
+heights %>% 
+  apply(MARGIN = 2, FUN = is.na) %>% 
+  apply(MARGIN = 2, FUN = sum) 
+```
+
+```{r}
+# NAs in my_heights?
+heights %>% 
+  is.na() %>% 
+  apply(MARGIN = 2, FUN = sum) 
+```
+
+```{r}
+# number of NAs in each variable
+# drop variables with no NA
+heights %>% 
+  is.na() %>% 
+  colSums()
+```
+
+```{r}
+# number of NAs in each variable
+# drop variables with no NA
+heights %>% 
+  is.na() %>% 
+  colSums() %>% 
+  class()
+  .[. > 0]
+```
+
+```{r}
+# package vtable must be installed
+heights %>% 
+  select(-marital, -sex) %>% 
+  # . to stop RStudio complaining about no data
+  vtable::st(.)
+```
+
+```{r}
+# package vtable must be installed
+heights %>% 
+  select(marital, sex) %>% 
+  vtable::st(.)
+```
+
+```{r}
+heights %>% 
+  select(-marital) %>% 
+  vtable::st(group = 'sex')
+```
+
+```{r}
+# package vtable must be installed
+heights %>% 
+  mutate(married = if_else(
+    marital == 'married', 
+    TRUE, 
+    FALSE)
+    ) %>% 
+  filter(sex == 'female') %>% 
+  select(-sex, -marital) %>% 
+  vtable::st(group = 'married')
+```
+
+```{r}
+# package vtable must be installed
+heights %>% 
+  mutate(married = if_else(
+    marital == 'married', 
+    TRUE, 
+    FALSE)
+    ) %>% 
+  filter(sex == 'male') %>% 
+  select(-sex, -marital) %>% 
+  vtable::st(group = 'married')
+```
+
+```{r}
+ggplot(data = heights) +
+  geom_bar(mapping = aes(x = education), na.rm = TRUE)
+```
+
+```{r}
+ggplot(data = heights) +
+  geom_bar(mapping = aes(x = education))
+```
+
+```{r}
+hist1 <- ggplotify::as.ggplot(~hist(heights$income, breaks = 20))
+hist2 <- ggplot(heights, mapping = aes(x = income)) +
+  geom_histogram(bins = 20)
+
+gridExtra::grid.arrange(hist1, hist2, ncol = 2)
+```
+
+```{r}
+hist3 <- ggplot(heights, mapping = aes(x = income)) +
+  geom_histogram(bins = 40, na.rm = TRUE)
+hist4 <- ggplot(heights, mapping = aes(x = height)) +
+  geom_histogram(bins = 40, na.rm = TRUE)
+hist5 <- ggplot(heights, mapping = aes(x = weight)) +
+  geom_histogram(bins = 40, na.rm = TRUE)
+gridExtra::grid.arrange(hist3, hist4, hist5, ncol = 1)
+```
+
+```{r}
+hist6 <- ggplot(heights, mapping = aes(x = age)) +
+  geom_histogram(bins = 40, na.rm = TRUE)
+hist7 <- ggplot(heights, mapping = aes(x = education)) +
+  geom_histogram(bins = 40, na.rm = TRUE)
+hist8 <- ggplot(heights, mapping = aes(x = afqt)) +
+  geom_histogram(bins = 40, na.rm = TRUE)
+gridExtra::grid.arrange(hist6, hist7, hist8, nrow = 1)
+```
+
+```{r}
+heights %>% 
+  mutate(
+    edu_fac = cut(education, 
+                  breaks = c(0, 12, 14, 16, 21), 
+                  labels = c("NotHS", "NotTC", "NotC", "C+"),
+                  right = FALSE) 
+  ) %>% 
+  filter(!is.na(edu_fac) & income > 0) %>%
+  ggplot(mapping = aes(x = income, fill = edu_fac, colour = edu_fac)) +
+  geom_density(alpha = 0.2, na.rm = TRUE) + 
+  facet_wrap(~sex)
+```
