@@ -175,3 +175,104 @@ heights %>%
   geom_density(alpha = 0.2, na.rm = TRUE) + 
   facet_wrap(~sex)
 ```
+
+```{r}
+heights %>% 
+  mutate(
+    edu_fac = cut(education, 
+                  breaks = c(0, 12, 14, 16, 21), 
+                  labels = c("NotHS", "NotTC", "NotC", "C+"),
+                  right = FALSE) 
+  ) %>% 
+  filter(!is.na(edu_fac) & income > 0 & income < 250000) %>%
+  ggplot(mapping = aes(x = income, fill = edu_fac, colour = edu_fac)) +
+  geom_density(alpha = 0.2, na.rm = TRUE) + 
+  facet_wrap(~sex)
+```
+
+```{r}
+heights %>% 
+  mutate(
+    edu_fac = cut(education, 
+                  breaks = c(0, 12, 14, 16, 21), 
+                  labels = c("NotHS", "NotTC", "NotC", "C+"),
+                  right = FALSE) 
+  ) %>% 
+  filter(!is.na(edu_fac) & income > 0) %>%
+  ggplot(mapping = aes(x = income, fill = sex, colour = sex)) +
+  geom_density(alpha = 0.2, na.rm = TRUE) + 
+  facet_wrap(~edu_fac)
+```
+
+```{r}
+heights %>% 
+  mutate(
+    edu_fac = cut(education, 
+                  breaks = c(0, 12, 14, 16, 21), 
+                  labels = c("NotHS", "NotTC", "NotC", "C+"),
+                  right = FALSE) 
+  ) %>% 
+  filter(income > 0) %>% 
+  ggplot(mapping = aes(x = edu_fac, y = income)) +
+  facet_wrap(~sex) + 
+  geom_boxplot()
+```
+
+```{r}
+heights %>% 
+  mutate(
+    edu_fac = cut(education, 
+                  breaks = c(0, 12, 14, 16, 21), 
+                  labels = c("NotHS", "NotTC", "NotC", "C+"),
+                  right = FALSE) 
+  ) %>% 
+  filter(income > 0) %>% 
+  ggplot(mapping = aes(x = edu_fac, y = income)) +
+  facet_wrap(~sex) + 
+  geom_boxplot() + 
+  coord_flip()
+```
+
+```{r}
+heights %>% 
+  mutate(
+    edu_fac = cut(education, 
+                  breaks = c(0, 12, 14, 16, 21), 
+                  labels = c("NotHS", "NotTC", "NotC", "C+"),
+                  right = FALSE) 
+  ) %>% 
+  filter(income > 0 & !is.na(weight) & !is.na(afqt) & !is.na(edu_fac)) %>%
+ggplot(mapping = aes(x = income, y = after_stat(density))) +
+  geom_freqpoly(mapping = aes(colour = edu_fac), binwidth = 10000)
+```
+
+```{r}
+heights %>% 
+  mutate(
+    edu_fac = cut(education, 
+                  breaks = c(0, 12, 14, 16, 21), 
+                  labels = c("NotHS", "NotTC", "NotC", "C+"),
+                  right = FALSE) 
+  ) %>% 
+  filter(income > 0 & !is.na(weight) & !is.na(afqt) & !is.na(edu_fac)) %>%
+  ggplot() +
+  geom_count(mapping = aes(x = marital, y = edu_fac))
+```
+
+```{r}
+heights %>% 
+  filter(income > 0 & !is.na(weight) & !is.na(afqt) & !is.na(education)) %>%
+  ggplot() +
+  geom_point(mapping = aes(x = education, y = income), alpha = 0.05)
+```
+
+```{r}
+dim(diamonds)
+```
+
+```{r}
+diamonds %>% 
+  filter( carat >= 2.5) |>
+  ggplot(mapping = aes(x = carat, y = price)) +
+  geom_point(size = 0.1)
+```
