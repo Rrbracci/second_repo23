@@ -1,0 +1,92 @@
+---
+title: "tidy_data"
+format: html
+editor: visual
+---
+
+```{r}
+#| label: setup
+#| output: false
+#| message: false
+#| echo: false
+library(tidyverse)
+```
+
+```{r}
+table3
+```
+
+```{r}
+tidy3 <- table3 |>
+  separate(
+    col = rate,
+    into = c("cases", "pop"),
+    sep = "/"
+  )
+```
+
+```{r}
+tidy2 <- table2 |>
+  pivot_wider(
+    names_from = type,
+    values_from = count
+  )
+
+```
+
+```{r}
+tidy2
+```
+
+```{r}
+table2
+```
+
+```{r}
+table4a
+```
+
+```{r}
+tidy4a <- table4a |>
+  pivot_longer(
+  cols = -country,
+    names_to = "Year",
+    values_to = "cases"
+  )
+```
+
+```{r}
+tidy4a
+```
+
+```{r}
+ag_table4b <- table4b |>
+  rename(
+    y1999 = `1999`,
+    y2000 = `2000`
+  )
+```
+
+```{r}
+tidy4b <- ag_table4b |>
+  pivot_longer(
+  cols = -country,
+    names_to = "year",
+    values_to = "pop",
+    names_prefix = "y"
+  )
+```
+
+```{r}
+tidy4b
+```
+
+```{r}
+tidy4 <- left_join(tidy4a, tidy4b, join_by(country, Year == year)) |>
+  rename(year = Year)
+
+```
+
+```{r}
+tidy4
+```
