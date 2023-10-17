@@ -90,3 +90,67 @@ tidy4 <- left_join(tidy4a, tidy4b, join_by(country, Year == year)) |>
 ```{r}
 tidy4
 ```
+
+```{r}
+#| paged.print: false
+table5 %>%
+  unite(
+    col = year,
+    century, year,
+    sep = " "
+  )
+
+```
+
+```{r}
+(who)
+```
+
+```{r}
+who <- tidyr::who
+```
+
+```{r}
+who <- who |>
+  pivot_longer(
+    cols = -c(country:year),
+    names_to = "Categories",
+    values_to = "Values"
+  )
+```
+
+```{r}
+who <- who |>
+  mutate(
+    Categories = str_replace(Categories, 
+"newrel", "new_rel"),
+    Categories = str_replace(Categories, "new_","")
+  ) |>
+  separate(
+    col = Categories,
+    into = c("type", "genderAge"),
+    sep = "_"
+  ) |>
+  separate(
+    col = genderAge,
+    into = c("Gender", "Age"),
+    sep = 1
+  ) |>
+  mutate(
+    Age = str_replace(Age, "65", "6599") 
+  ) |>
+    separate(
+      col = Age,
+      into = c("AgeStart", "AgeEnd"),
+      sep = -2
+    )
+```
+
+```{r}
+who <- who |>
+  unite(
+    col = "age",
+    AgeStart, AgeEnd,
+    sep = "_"
+  )
+```
